@@ -75,6 +75,7 @@ class SecretDiary(QMainWindow):
         self.a = None
         self.b = None
         self.current_file = None
+        self.is_dark_theme = True
         
         self.initUI()
     
@@ -100,6 +101,7 @@ class SecretDiary(QMainWindow):
     def setup_menu(self):
         menubar = self.menuBar()
         fileMenu = menubar.addMenu("File")
+        themeMenu = menubar.addMenu("Themes")
         
         actions = {
             "New": (self.new_file, "Ctrl+N"),
@@ -114,11 +116,33 @@ class SecretDiary(QMainWindow):
             if shortcut:
                 action.setShortcut(QKeySequence(shortcut))
             fileMenu.addAction(action)
+
+        # Theme toggle action
+        toggle_theme_action = QAction("Toggle Dark/Light Theme", self)
+        toggle_theme_action.triggered.connect(self.toggle_theme)
+        themeMenu.addAction(toggle_theme_action)
     
+    def apply_theme(self):
+        if self.is_dark_theme:
+            self.apply_dark_theme()
+        else:
+            self.apply_light_theme()
+
     def apply_dark_theme(self):
         self.editor.setPaper(QColor("#1e1e1e"))
         self.editor.setColor(QColor("#d4d4d4"))
         self.editor.setCaretForegroundColor(QColor("#ffffff"))
+        self.setStyleSheet("QMainWindow { background-color: #2e2e2e; }")
+
+    def apply_light_theme(self):
+        self.editor.setPaper(QColor("#ffffff"))
+        self.editor.setColor(QColor("#000000"))
+        self.editor.setCaretForegroundColor(QColor("#000000"))
+        self.setStyleSheet("QMainWindow { background-color: #f0f0f0; }")
+
+    def toggle_theme(self):
+        self.is_dark_theme = not self.is_dark_theme
+        self.apply_theme()  
     
     def new_file(self):
         self.editor.clear()
