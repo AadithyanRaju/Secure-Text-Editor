@@ -66,7 +66,7 @@ pip install pyqt5 pycryptodome
 ## Security
 
 - Keys (`k1`, `k2`) and the number of iterations (`a`, `b`) are securely handled during the encryption/decryption process.
-- After use, keys are zeroed out and deleted to ensure they are not stored in memory.
+- After use, keys are zeroed out and deleted to ensure they are not stored in memory. (In Dev)
 - A **status bar** shows the current state, such as "Saving file..." or "File saved successfully."
 
 ## Example of Usage:
